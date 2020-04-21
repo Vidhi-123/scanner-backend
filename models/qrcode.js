@@ -3,11 +3,13 @@ const QRcode=require('qrcode');
 const qrimg=require('qr-image');
 const fs=require('fs');
 var nodemailer=require('nodemailer');
+const bcrypt = require('bcrypt');
 var qr={
     
     generateQR(id,callback)
     {
-        let qr_png=qrimg.imageSync(id,{ type: 'png'});
+        let hashID = bcrypt.hashSync(id,10);    // hashing the id
+        let qr_png=qrimg.imageSync(hashID,{ type: 'png'});
         let qr_code_file_name = id + '.png';
         fs.writeFileSync('C:/Users/VIDHI/Desktop/project/' + qr_code_file_name, qr_png,function(err)
         {
