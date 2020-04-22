@@ -3,11 +3,16 @@ const QRcode=require('qrcode');
 const qrimg=require('qr-image');
 const fs=require('fs');
 var nodemailer=require('nodemailer');
+const crypto = require('crypto'); //do npm install crypto
 var qr={
     
     generateQR(id,callback)
     {
-        let qr_png=qrimg.imageSync(id,{ type: 'png'});
+        let mykey = crypto.createCipher('aes-128-cbc', 'dascanner');
+        let encryptedID = mykey.update('abc', 'utf8', 'hex')
+        encryptedID += mykey.final('hex');
+        
+        let qr_png=qrimg.imageSync(encryptedID,{ type: 'png'});
         let qr_code_file_name = id + '.png';
         fs.writeFileSync('C:/Users/VIDHI/Desktop/project/' + qr_code_file_name, qr_png,function(err)
         {

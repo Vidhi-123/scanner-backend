@@ -9,7 +9,11 @@
             let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
             scanner.addListener('scan', function (content) {
               //alert(content);
-              let s1=Number(content);
+	      var crypto = <%=crypto%>;
+	      var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+	      var decryptedID = mykey.update(content, 'hex', 'utf8')
+	      decryptedID += mykey.final('utf8');
+              let s1=Number(decryptedID);
               console.log("vidhu"+s1);
               if(isNaN(s1))
               {
@@ -32,7 +36,7 @@
              {
                if(batch_year<=year && batch_year>=year-4)
                {
-                window.location.href="/lib_tmp/"+content;
+                window.location.href="/lib_tmp/"+decryptedID;
                }
                else{
                  document.write("invalid");
@@ -42,7 +46,7 @@
              {
                 if(batch_year<=year && batch_year>=year-2)
                 {
-                  window.location.href="/lib_tmp/"+content;
+                  window.location.href="/lib_tmp/"+decryptedID;
                 }
                 else
                 {

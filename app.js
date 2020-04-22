@@ -13,7 +13,7 @@ var lib_tmp=require('./routes/lib_tmp_router');
 var lib=require('./routes/lib_main_router');
 var lib_tmp_out=require('./routes/lib_tmp_out_router');
 var time1=require('./timer');
-
+var crypto = require('crypto');
 
 var app = express();
 
@@ -30,8 +30,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,6 +42,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', "index");
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
+
+// setting global variable available to all ejs 
+app.locals.crypto = crypto;
 
 
 app.get('/',(req,res,next)=>{
