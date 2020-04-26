@@ -13,13 +13,24 @@ var lib_tmp=require('./routes/lib_tmp_router');
 var lib=require('./routes/lib_main_router');
 var lib_tmp_out=require('./routes/lib_tmp_out_router');
 var time1=require('./timer');
+var crypto = require('crypto');
 
 
 var app = express();
 
 
 
+app.post("/decryptID/:id",(req,res) => {
 
+  
+  console.log(req.params.id);
+  let id = req.params.id;
+  var mykey = crypto.createDecipher('aes-128-cbc', 'dascanner');
+  var mystr = mykey.update(id, 'hex', 'utf8')
+  mystr += mykey.final('utf8');
+
+  res.send(mystr);
+})
 
 
 
@@ -28,6 +39,8 @@ app.set('view engine', 'html');
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

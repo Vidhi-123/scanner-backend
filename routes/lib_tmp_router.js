@@ -29,12 +29,15 @@ router.get('/:id?',function(req,res,next){
                 var m=d1.getMinutes();
                 var s=d1.getSeconds();
                 console.log("time"+h+":"+m+":"+s);
+                const now=new Date();
                 const tmp=new tmp_lib({
                     user_id : id1,
                     //in_time : dat_obj.getTime(),
                     in_time:new String(h+":"+m+":"+s),
                     out_time:null,
-                    date:new Date(dat_obj.getFullYear(),dat_obj.getMonth(),dat_obj.getDate())
+                    //date:new Date(dat_obj.getFullYear(),dat_obj.getMonth(),dat_obj.getDate())
+                    date: date.format(now, 'DD-MM-YYYY')
+                    //console.log("jjj"+currDate);
                 });
                 console.log(tmp);
                 tmp.save(function(err,result){
@@ -43,7 +46,8 @@ router.get('/:id?',function(req,res,next){
                         res.json(err);
                     }
                     else{
-                        res.json(result);
+                        //res.json(result);
+                        res.redirect('/lib_tmp');
                     }
                 });
             }
@@ -63,7 +67,10 @@ router.get('/:id?',function(req,res,next){
             
                         const now = new Date();
                         let curtime=date.format(now,'HH:mm:ss')
+                        let currDate = date.format(now, 'DD-MM-YYYY');
+                        console.log("jjj"+currDate);
                         docs1[0].out_time=curtime;
+                        docs1[0].date=currDate;
                         //date:new Date(dat_obj.getFullYear(),dat_obj.getMonth(),dat_obj.getDate()+1)
                         
                         docs1[0].save(function(err1,res1){
@@ -100,7 +107,8 @@ router.get('/:id?',function(req,res,next){
                                             }
                                             else
                                             {
-                                                res.json(result);
+                                                //res.json(result);
+                                                res.redirect('/lib_tmp');
                                             }
                                         })
 
@@ -129,17 +137,21 @@ router.get('/:id?',function(req,res,next){
     });
 }
 else{
-    tmp_lib.find().count(function(err,rows){
+    tmp_lib.find(function(err,rows){
         if(err)
         {
             res.json(err);
         }
         else{
             console.log(rows);
-            let x=200-rows;
+            let x=200-rows.length;
             console.log(x);
-            res.json(x);
-            //res.redirect('/equipment/');
+            //res.json(x);
+            res.render('add_lib_tmp',{
+                avl_seats:x,
+                students:rows,
+                errors:null
+            })
         }
     })
 }
@@ -169,7 +181,8 @@ router.post('/',function(req,res,next){
             res.json(err);
         }
         else{
-            res.json(result);
+            //res.json(result);
+            res.redirect('/lib_tmp');
         }
     });
 })

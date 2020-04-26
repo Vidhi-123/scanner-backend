@@ -4,7 +4,16 @@ var equipment=require('../models/equipment');
 var sac=require('../models/sac_records');
 var mail_equ=require('../models/mail_equipment');
 
-
+router.get('/delete/:id',function(req,res,next){
+    equipment.findByIdAndDelete(req.params.id,function(err,docs){
+        if(err){
+            res.json(err);
+        }
+        else{
+            res.redirect('/equipment/');
+        }
+    })
+})
 router.get('/',function(req,res,next){
     equipment.find(function(err,docs){
                 if(err)

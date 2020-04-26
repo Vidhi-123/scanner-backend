@@ -8,7 +8,7 @@ const fs=require('fs');
 router.post("/",function(req,res,next){
 
    
-    qr.generateQR(req.body.id,function(err){
+    qr.generateQR(req.body.uname,function(err){
         if(err)
         {
             res.json(err);

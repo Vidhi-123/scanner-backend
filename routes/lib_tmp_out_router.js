@@ -75,6 +75,7 @@ router.get('/',function(req,res,next){
                                             {
                                                 //res.json(result);
                                                 console.log(result);
+                                                //res.redirect('/lib_tmp');
                                             }
                                         })
                                     
@@ -100,11 +101,13 @@ router.get('/',function(req,res,next){
 
 
             }
+            
         }
-        res.redirect('/lib_tmp'); 
+       
         //console.log("done lib");//su kravu lakh tu
+        setTimeout(()=>{res.redirect('/lib_tmp')}, 1000); 
     });
 
-
+   
 });
 module.exports =router;

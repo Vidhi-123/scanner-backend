@@ -1,7 +1,11 @@
 //var window=require('Window');
+
+
 var tmp_lib=require('./models/lib_tmp');
 var lib=require('./models/library');
 const date = require('date-and-time');
+
+
 
 var time={
      f2() {
@@ -10,7 +14,7 @@ var time={
                     var date1 = new Date(); // Create a Date object to find out what time it is
                     console.log(date1.getMinutes());
                     //console.log(global);
-                    if(date1.getHours() === 11 && date1.getMinutes() === 02 ){ // Check the time
+                    if(date1.getHours() === 12 && date1.getMinutes() === 18 ){ // Check the time
                         
                        
                         tmp_lib.find(function(err,docs){
@@ -113,7 +117,11 @@ var time={
                                 }
                             }
                             //res.redirect('/lib_tmp'); 
-                            console.log("done lib");//su kravu lakh tu
+                            
+                           
+                            //setTimeout(()=>{res.redirect('/lib_tmp')}, 1000); 
+                            
+                    console.log("done lib");//su kravu lakh tu
                         });
                     
 
